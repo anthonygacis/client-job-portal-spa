@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  workflow_dispatch:
+#  release:
+#    types: [ published ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy with maintenance notice
+        if: "contains(github.event.release.body, '[maintenance]')"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          script: |
+            cd /var/www/client-job-portal-spa/
+            php artisan down --render="errors::503" --refresh=10
+            git pull origin main
+            git fetch --tags --force
+            composer install -q --no-ansi --no-interaction --no-progress --prefer-dist
+            php artisan migrate --force
+            sudo php artisan db:seed --class=RoleSeeder --force
+            php artisan optimize
+            php artisan view:cache
+            php artisan clear:maintenance
+            php artisan up
+      - name: Deploy without maintenance notice
+        if: "!contains(github.event.release.body, '[maintenance]')"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          script: |
+            cd /var/www/client-job-portal-spa/
+            git pull origin main
+            git fetch --tags --force
+            php artisan migrate --force
+            sudo php artisan db:seed --class=RoleSeeder --force
+            php artisan optimize
+            php artisan view:cache
