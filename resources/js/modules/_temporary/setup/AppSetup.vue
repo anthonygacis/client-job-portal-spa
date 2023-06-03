@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, reactive } from "vue";
+import {onMounted, reactive} from "vue";
 import StepOne from "./StepOne.vue";
 import StepTwo from "./StepTwo.vue";
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 
 const steps = [StepOne, StepTwo];
 const state = reactive({
@@ -34,7 +34,7 @@ onMounted(() => {
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <router-link class="navbar-brand navbar-brand-autodark" to="/">
-                <img alt="" height="36" src="/logo.svg" />
+                <img alt="" height="36" src="/logo-icon.svg"/>
             </router-link>
         </div>
         <div class="card card-md">

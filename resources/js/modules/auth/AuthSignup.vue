@@ -27,7 +27,7 @@ onMounted(() => {
 <template>
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
-            <a class="navbar-brand navbar-brand-autodark" href="/public"><img alt="" height="36" src="/resources/assets/logo.svg"/></a>
+            <a class="navbar-brand navbar-brand-autodark" href="/"><img alt="" height="36" src="/logo.svg"/></a>
         </div>
         <div class="card card-md">
             <div class="card-body">
@@ -89,13 +89,13 @@ onMounted(() => {
                     </label>
                 </div>
                 <div class="form-footer">
-                    <button class="btn btn-primary w-100" type="button" @click="onSignUp">Create new account</button>
+                    <button :disabled="true" class="btn btn-primary w-100" type="button" @click="onSignUp">Create new account</button>
                 </div>
             </div>
         </div>
         <div class="text-center text-muted mt-3">
             Already have account?
-            <router-link tabindex="-1" to="/login">Sign In</router-link>
+            <router-link tabindex="-1" to="/app/login">Sign In</router-link>
         </div>
     </div>
     <teleport to="#external">

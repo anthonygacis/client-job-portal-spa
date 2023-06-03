@@ -14,7 +14,16 @@ export default defineConfig({
                 '@tabler/core/dist/css/tabler-vendors.min.css',
                 '@tabler/core/dist/css/demo.min.css',
                 'nprogress/nprogress.css',
-                'vue-toastification/dist/index.css'
+                'vue-toastification/dist/index.css',
+
+                'resources/js-landing/app-landing.js',
+                // "resources/assets/js-landing/assets/ionicons/css/ionicons.min.css",
+                "bootstrap/dist/css/bootstrap.min.css",
+                // "resources/assets/js-landing/assets/sweetalert/dist/sweetalert.css",
+                // "resources/assets/js-landing/assets/css/stisla.css",
+                "bootstrap/dist/js/bootstrap.min",
+                // "resources/assets/js-landing/assets/sweetalert/dist/sweetalert.min",
+                // "resources/assets/js-landing/assets/js/stisla",
             ],
         }),
         vuePlugin()

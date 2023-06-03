@@ -22,7 +22,7 @@ async function onLogout() {
         console.log(error);
     }
     localStorage.removeItem('auth')
-    await router.push("/login");
+    await router.push("/app/login");
 }
 </script>
 <template>

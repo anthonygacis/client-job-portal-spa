@@ -5,7 +5,7 @@ export default async function auth(to, from, index) {
     const authenticated = await auth.isAuth();
     if (!authenticated) {
         return {
-            path: "/login",
+            path: "/app/login",
             query: {
                 redirect: to.fullPath
             },

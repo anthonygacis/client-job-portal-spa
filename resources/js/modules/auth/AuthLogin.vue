@@ -28,7 +28,7 @@ async function handleSignIn() {
         if (route.query.redirect) {
             await router.push(route.query.redirect.toString());
         } else {
-            await router.push("/");
+            await router.push("/app/home");
         }
     } catch (error) {
         console.log(error)
@@ -52,11 +52,6 @@ onMounted(async () => {
         <div class="row align-items-center g-4">
             <div class="col-lg">
                 <div class="container-tight">
-                    <div class="text-center mb-4">
-                        <a class="navbar-brand navbar-brand-autodark">
-                            <img alt="" height="36" src="/logo.svg"/>
-                        </a>
-                    </div>
                     <div class="card card-md">
                         <div class="card-body">
                             <h2 class="h2 text-center mb-4">Login to your account</h2>
@@ -112,7 +107,7 @@ onMounted(async () => {
                                 <div class="form-footer">
                                     <button
                                         :disabled="state._is_processing"
-                                        class="btn btn-primary w-100"
+                                        class="btn btn-primary w-100 mb-3"
                                         type="submit"
                                         @click="handleSignIn"
                                     >
@@ -122,6 +117,13 @@ onMounted(async () => {
                                         </span>
                                         <span v-else>Sign in</span>
                                     </button>
+                                    <div class="text-center text-muted mt-3">
+                                        New here?
+                                        <router-link tabindex="-1" to="/app/signup">Create now!</router-link>
+                                    </div>
+                                    <div class="text-center text-muted mt-3">
+                                        <a href="/">Go back</a>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -129,7 +131,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="col-lg d-none d-lg-block">
-                <img alt="" class="d-block mx-auto" height="300" src="/aroroy_masbate_seal_logo.png"/>
+                <img alt="" class="d-block mx-auto" height="300" src="/logo-circle.svg"/>
             </div>
         </div>
     </div>

@@ -1,15 +1,24 @@
 import guest from "@/js/router/middlewares/guest";
 import onlyLoggedOut from "@/js/router/middlewares/only-logged-out";
 
-const Login = () => import("../../modules/auth/AuthLogin.vue");
+const Login = () => import("@/js/modules/auth/AuthLogin.vue");
+const SignUp = () => import("@/js/modules/auth/AuthSignup.vue");
 
 const routes = [
     {
-        path: "/login",
+        path: "/app/login",
         name: "login",
         component: Login,
         meta: {
             title: "Login"
+        }
+    },
+    {
+        path: "/app/signup",
+        name: "signup",
+        component: SignUp,
+        meta: {
+            title: "Create an Account"
         }
     },
 ];

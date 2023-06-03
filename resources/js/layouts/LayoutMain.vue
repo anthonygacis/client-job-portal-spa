@@ -21,7 +21,7 @@ onMounted(() => {
                 </button>
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                     <router-link :to="{ name: 'home' }">
-                        <img alt="SorSU Web Cloud" class="navbar-brand-image" height="32" src="/logo.svg" width="110"/>
+                        <img alt="SorSU Web Cloud" class="navbar-brand-image" height="32" src="/logo-icon.svg" width="110"/>
                     </router-link>
                 </h1>
                 <app-nav-bar/>

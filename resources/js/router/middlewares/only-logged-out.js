@@ -5,7 +5,7 @@ export default async function onlyLoggedOut(to, from, index) {
     const authenticated = await auth.isAuth();
     if (authenticated) {
         return {
-            path: "/"
+            path: "/app"
         }
     }
 

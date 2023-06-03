@@ -12,7 +12,7 @@ function print() {
         </div>
         <div class="container-fluid">
             <div style="width: 100px; height: 100px">
-                <img alt="" class="img-fluid" src="/aroroy_masbate_seal_logo.png">
+                <img alt="" class="img-fluid" src="/logo-circle.svg">
             </div>
             <div class="table-responsive">
                 <table class="table table-info">
