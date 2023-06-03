@@ -18,7 +18,7 @@ const routes = [
         name: "signup",
         component: SignUp,
         meta: {
-            title: "Create an Account"
+            title: "Create new account"
         }
     },
 ];

@@ -3,14 +3,24 @@ import NProgress from "nprogress";
 import publicRoutes from "./routes/public.js";
 import onlyLoggedOutRoutes from "./routes/only-logged-out.js";
 import privateRoutes from "./routes/private.js";
+import privateSetupRoutes from "./routes/private-setup.js";
 import "nprogress/nprogress.css";
 
 const NotFound = () => import("../shared/components/errors/NotFound.vue");
+const LayoutMain = () => import("@/js/layouts/LayoutMain.vue");
 
 const routes = [
     ...publicRoutes,
-    ...privateRoutes,
     ...onlyLoggedOutRoutes,
+    ...privateSetupRoutes,
+    {
+        path: "/app",
+        name: "app",
+        component: LayoutMain,
+        children: [
+            ...privateRoutes,
+        ],
+    },
     {
         path: "/:catchAll(.*)*",
         alias: '/404',

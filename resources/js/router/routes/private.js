@@ -1,30 +1,17 @@
-import auth from "@/js/router/middlewares/auth";
-
-const Setup = () => import("@/js/modules/_temporary/setup/AppSetup.vue");
-const LayoutMain = () => import("@/js/layouts/LayoutMain.vue");
-const AppSettings = () => import("@/js/modules/profile/AppSettings.vue");
-
-const SampleReport = () => import('@/js/shared/components/templates/reports/SampleReport.vue')
-
 import homeRoute from '@/js/modules/home/router'
 import userManagementRoute from '@/js/modules/user-management/router'
+import auth from "@/js/router/middlewares/auth";
 import authorize from "@/js/router/middlewares/authorize";
+import doneSetup from "@/js/router/middlewares/done-setup";
+
+const AppSettings = () => import("@/js/modules/profile/AppSettings.vue");
+const LayoutMain = () => import("@/js/layouts/LayoutMain.vue");
+const SampleReport = () => import('@/js/shared/components/templates/reports/SampleReport.vue')
+
 
 const routes = [
-    {
-        path: "/app",
-        name: "app",
-        component: LayoutMain,
-        children: [
-            homeRoute,
-            userManagementRoute
-        ],
-    },
-    {
-        path: "/setup",
-        name: "setup",
-        component: Setup,
-    },
+    homeRoute,
+    userManagementRoute,
     {
         path: "/profile",
         name: "profile",
@@ -57,7 +44,8 @@ export default routes.map((route) => {
     const meta = {
         middleware: [
             auth,
-            authorize
+            authorize,
+            doneSetup
         ],
         public: false,
         exist: true,

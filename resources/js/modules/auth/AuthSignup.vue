@@ -1,22 +1,53 @@
 <script setup>
-import {onMounted, reactive} from "vue";
+import {computed, onMounted, reactive} from "vue";
 import {useAuthStore} from "@/js/shared/stores/AuthStore";
 import {useRouter} from "vue-router";
+import EyeOffIcon from "vue-tabler-icons/icons/EyeOffIcon";
+import EyeIcon from "vue-tabler-icons/icons/EyeIcon";
+import {toast} from "@/js/helpers/toasts";
 
 const state = reactive({
-    _is_pass_show: false,
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    userType: 'job-seeker',
+    _errors: null,
+    _agree: false,
+    _isPassShow: false,
+    _isPassShowConfirm: false,
+    _isProcessing: false,
 });
-
+const isDone = computed(() => {
+    return state.username && state.email && state.password && state.passwordConfirm && state._agree && state.password === state.passwordConfirm
+})
 const router = useRouter();
 
-function togglePassShow() {
-    state._is_pass_show = !state._is_pass_show;
+function togglePassShow(type) {
+    if (type === 'main') state._isPassShow = !state._isPassShow;
+    else if (type === 'confirm') state._isPassShowConfirm = !state._isPassShowConfirm;
 }
 
-function onSignUp() {
+async function onSignUp() {
+    state._isProcessing = true
     let auth = useAuthStore();
-    auth.is_auth = true;
-    router.push("/setup");
+    await auth.create({
+        username: state.username,
+        email: state.email,
+        password: state.password,
+        password_confirmation: state.passwordConfirm,
+        user_type: state.userType
+    })
+        .then(async () => {
+            await router.push("/app/home");
+        })
+        .catch((e) => {
+            if (e.response?.data) {
+                state._errors = e.response.data.errors
+                console.log(state._errors)
+            }
+        })
+    state._isProcessing = false
 }
 
 onMounted(() => {
@@ -33,63 +64,89 @@ onMounted(() => {
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Create new account</h2>
                 <div class="mb-3">
-                    <label class="form-label">Join Code: <span class="text-red">*</span></label>
-                    <div class="input-group input-group-flat">
-                        <input class="form-control" placeholder="xxx-xxx" type="text"/>
-                        <span class="input-group-text">
-                            <a
-                                class="input-group-link"
-                                data-bs-target="#join-code"
-                                data-bs-toggle="modal"
-                                href="javascript:void(0)"
-                            >What's this?</a
-                            >
-                        </span>
-                    </div>
+                    <label class="form-label">Username: <span class="text-red">*</span></label>
+                    <input v-model="state.username" :class="{ 'is-invalid': state._errors?.username?.length }" class="form-control" placeholder="Your username" type="text"/>
+                    <div v-if="state._errors?.username?.length" class="invalid-feedback">{{ state._errors?.username[0] }}</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email address: <span class="text-red">*</span></label>
-                    <input class="form-control" placeholder="Enter email" type="email"/>
+                    <input v-model="state.email" :class="{ 'is-invalid': state._errors?.email?.length }" class="form-control" placeholder="Your email" type="email"/>
+                    <div v-if="state._errors?.email?.length" class="invalid-feedback">{{ state._errors?.email[0] }}</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password: <span class="text-red">*</span></label>
                     <div class="input-group input-group-flat">
                         <input
-                            :type="state._is_pass_show ? 'text' : 'password'"
+                            v-model="state.password"
+                            :type="state._isPassShow ? 'text' : 'password'"
                             autocomplete="off"
                             class="form-control"
-                            placeholder="Password"
+                            placeholder="Password (At least 8 characters)"
                         />
                         <span class="input-group-text">
                             <span
                                 class="link-secondary"
                                 data-bs-toggle="tooltip"
                                 title="Show password"
-                                @click="togglePassShow"
+                                @click="togglePassShow('main')"
                             >
-                                <eye-off-icon v-if="!state._is_pass_show" class="icon"/>
+                                <eye-off-icon v-if="!state._isPassShow" class="icon"/>
                                 <eye-icon v-else class="icon"/>
                             </span>
                         </span>
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Confirm Password: <span class="text-red">*</span></label>
+                    <div class="input-group input-group-flat">
+                        <input
+                            v-model="state.passwordConfirm"
+                            :type="state._isPassShowConfirm ? 'text' : 'password'"
+                            autocomplete="off"
+                            class="form-control"
+                            placeholder="Retype password"
+                        />
+                        <span class="input-group-text">
+                            <span
+                                class="link-secondary"
+                                data-bs-toggle="tooltip"
+                                title="Show password"
+                                @click="togglePassShow('confirm')"
+                            >
+                                <eye-off-icon v-if="!state._isPassShowConfirm" class="icon"/>
+                                <eye-icon v-else class="icon"/>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex justify-content-center">
+                    <div class="form-selectgroup">
+                        <label class="form-selectgroup-item">
+                            <input v-model="state.userType" class="form-selectgroup-input" name="icons" type="radio" value="job-seeker"/>
+                            <span class="form-selectgroup-label">Job Seeker</span>
+                        </label>
+                        <label class="form-selectgroup-item">
+                            <input v-model="state.userType" class="form-selectgroup-input" name="icons" type="radio" value="employer"/>
+                            <span class="form-selectgroup-label">Employer</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3">
                     <label class="form-check">
-                        <input class="form-check-input" type="checkbox"/>
-                        <span class="form-check-label"
-                        >Agree the
+                        <input v-model="state._agree" class="form-check-input" type="checkbox"/>
+                        <span class="form-check-label">
+                            Agree the
                             <a
                                 data-bs-target="#terms-policy"
                                 data-bs-toggle="modal"
                                 href="javascript:void(0)"
                                 tabindex="-1"
-                            >terms and policy</a
-                            >.</span
-                        >
+                            >terms and policy</a>.
+                        </span>
                     </label>
                 </div>
                 <div class="form-footer">
-                    <button :disabled="true" class="btn btn-primary w-100" type="button" @click="onSignUp">Create new account</button>
+                    <button :disabled="!isDone || state._isProcessing" class="btn btn-primary w-100" type="button" @click="onSignUp">Create new account</button>
                 </div>
             </div>
         </div>
@@ -99,24 +156,6 @@ onMounted(() => {
         </div>
     </div>
     <teleport to="#external">
-        <div id="join-code" aria-hidden="true" class="modal modal-blur fade" role="dialog" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Join Code</h5>
-                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                    </div>
-                    <div class="modal-body">
-                        Join Code is a unique combination of numbers. It is used to allow you to join on a certain
-                        organization. To get this, kindly consult the immediate supervisor (e.g. team lead, instructor,
-                        etc.).
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" data-bs-dismiss="modal" type="button">Got it!</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="terms-policy" aria-hidden="true" class="modal modal-blur fade" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">

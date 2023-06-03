@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import {onMounted} from "vue";
 
 onMounted(() => {
     document.body.classList.add("border-top-wide", "border-primary", "d-flex", "flex-column");
@@ -14,7 +14,7 @@ onMounted(() => {
             <p class="empty-title">Oops… You just found an error page</p>
             <p class="empty-subtitle text-muted">We are sorry but the page you are looking for was not found</p>
             <div class="empty-action">
-                <router-link class="btn btn-primary" to="/">
+                <router-link class="btn btn-primary" to="/app">
                     <!-- Download SVG icon from http://tabler-icons.io/i/arrow-left -->
                     <svg
                         class="icon"
@@ -28,10 +28,10 @@ onMounted(() => {
                         width="24"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path d="M0 0h24v24H0z" fill="none" stroke="none" />
-                        <line x1="5" x2="19" y1="12" y2="12" />
-                        <line x1="5" x2="11" y1="12" y2="18" />
-                        <line x1="5" x2="11" y1="12" y2="6" />
+                        <path d="M0 0h24v24H0z" fill="none" stroke="none"/>
+                        <line x1="5" x2="19" y1="12" y2="12"/>
+                        <line x1="5" x2="11" y1="12" y2="18"/>
+                        <line x1="5" x2="11" y1="12" y2="6"/>
                     </svg>
                     Take me home
                 </router-link>

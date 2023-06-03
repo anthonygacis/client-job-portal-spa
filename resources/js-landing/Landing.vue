@@ -18,6 +18,19 @@ onMounted(() => {
         });
     });
 
+    const dataBgs = document.querySelectorAll('[data-bg]')
+    dataBgs.forEach((item) => {
+        let bg = item.getAttribute('data-bg')
+        item.style.backgroundImage = 'url(' + bg + ')'
+        item.style.backgroundPosition = 'center'
+        item.style.backgroundAttachment = 'fixed'
+        item.style.backgroundSize = 'contain'
+        item.style.backgroundRepeat = 'no-repeat'
+        let div = document.createElement('div')
+        div.classList.add('overlay')
+        item.prepend(div)
+    })
+
     window.addEventListener('scroll', function () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         let heroHeight = document.querySelector('.hero').getBoundingClientRect().height;
@@ -79,7 +92,7 @@ onMounted(() => {
             </div>
         </div>
     </nav>
-    <section id="hero" class="hero bg-overlay" data-bg="img/hero.jpeg">
+    <section id="hero" class="hero bg-overlay" data-bg="/logo-white.svg">
         <div class="text py-5">
             <p class="lead">Sorsogon State University</p>
             <h1>Placement Services Office: A place where career and employment matters</h1>
@@ -237,12 +250,12 @@ onMounted(() => {
         </div>
     </section>
 
-    <section id="project" class="bg-overlay padding" data-bg="img/projects.jpeg">
-        <div class="container">
+    <section id="project" class="bg-overlay padding" data-bg="/logo.svg">
+        <div class="container position-relative">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6">
                     <figure class="projects-picture">
-                        <img alt="Youzhang" src="/logo.svg">
+                        <img alt="Youzhang" src="/logo-white.svg">
                     </figure>
                 </div>
                 <div class="col-12 col-md-6">
@@ -275,13 +288,13 @@ onMounted(() => {
             <div class="section-body">
                 <div class="row col-spacing">
                     <div class="col-12 col-md-5">
-                        <p class="contact-text">You can send us something like a question or project, we are open 09:00 to 17:00.</p>
+                        <p class="contact-text">You can send us something like a question or project, we are open 09:00 AM to 05:00 PM.</p>
                         <ul class="contact-icon">
                             <li><i class="ion ion-ios-telephone"></i>
-                                <div>+6212345123</div>
+                                <div>+639123456789</div>
                             </li>
                             <li><i class="ion ion-ios-email"></i>
-                                <div>hi@kodinger.com</div>
+                                <div>cict@sorsu.edu.ph</div>
                             </li>
                         </ul>
                     </div>
@@ -315,11 +328,11 @@ onMounted(() => {
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-8 text">
-                    <h3>Start your project with this awesome template</h3>
+                    <h3>Are you an employer?</h3>
                 </div>
                 <div class="col-12 col-md-4 cta">
                     <a class="btn btn-outline-primary" href="#">
-                        Download Now
+                        Look for candidates here
                     </a>
                 </div>
             </div>

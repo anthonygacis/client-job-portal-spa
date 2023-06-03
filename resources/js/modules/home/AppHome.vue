@@ -2,7 +2,14 @@
 
 import BaseContainer from "@/js/shared/components/base/BaseContainer.vue";
 import {SearchIcon} from "vue-tabler-icons";
+import {onMounted} from "vue";
+import {useAuthStore} from "@/js/shared/stores/AuthStore";
 
+const auth = useAuthStore()
+
+onMounted(() => {
+    console.log(auth.getUser())
+})
 </script>
 <template>
     <base-container>

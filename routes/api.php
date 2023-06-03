@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('signup', [AuthController::class, 'store']);
 
 Route::get('reports', [ReportsController::class, 'index'])->name('reports');
 

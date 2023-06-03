@@ -22,6 +22,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'relogin_required' => 'boolean'
+        'relogin_required' => 'boolean',
+        'done_setup' => 'boolean'
     ];
 }

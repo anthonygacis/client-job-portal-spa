@@ -4,10 +4,9 @@ import {createPinia} from "pinia";
 import "vue-toastification/dist/index.css";
 import "@/js-landing/assets/ionicons/css/ionicons.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "@/js-landing/assets/sweetalert/dist/sweetalert.css"
 import "@/js-landing/assets/css/stisla.css"
 // import "@/js-landing/assets/js/jquery.min"
-// import "bootstrap/dist/js/bootstrap.min"
+import "bootstrap/dist/js/bootstrap.min"
 // import "@/js-landing/assets/js/jquery.easeScroll"
 // import "@/js-landing/assets/sweetalert/dist/sweetalert.min"
 // import "@/js-landing/assets/js/stisla"

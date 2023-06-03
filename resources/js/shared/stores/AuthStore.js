@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import {attachApiUrl, requestGet, requestPost} from "@/js/helpers/requests";
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 export let useAuthStore = defineStore("auth", () => {
     let userData = ref(null)
@@ -20,6 +21,18 @@ export let useAuthStore = defineStore("auth", () => {
         }).catch((e) => {
             throw new Error(e.response.data.message)
         })
+    }
+
+    async function create(payload) {
+        await requestPost('/api/signup', payload)
+            .then(async ({data}) => {
+                // TODO make auth
+                localStorage.setItem('auth', 'true')
+                localStorage.setItem('user', JSON.stringify(data.user))
+                localStorage.setItem('permissions', JSON.stringify(data.permissions))
+                userData.value = data.user
+                userPermissions.value = data.permissions
+            })
     }
 
     async function logout() {
@@ -89,5 +102,5 @@ export let useAuthStore = defineStore("auth", () => {
         return userData.value?.roles?.map(i => i.name)?.join(', ')
     }
 
-    return {login, logout, isAuth, getUser, getID, hasValidPermissions, refreshUserData, getRoles, getPermissions}
+    return {login, create, logout, isAuth, getUser, getID, hasValidPermissions, refreshUserData, getRoles, getPermissions}
 })
